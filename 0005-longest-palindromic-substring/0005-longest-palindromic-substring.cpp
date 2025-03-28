@@ -2,10 +2,8 @@ class Solution {
 public:
     string longestPalindrome(string s) {
         int len = s.length();
-        if (len == 1)
-        {
-            return s;
-        }
+        if (len == 1) return s;
+        
         auto expand_from_center = [&](int left, int right){
             while (left >= 0 && right < len && s[left] == s[right])
             {
