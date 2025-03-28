@@ -13,7 +13,7 @@ public:
             return s.substr(left+1, right - left - 1);
         };
 
-        std::string max_str = "";
+        std::string max_str = s.substr(0, 1);
         for (int i = 0; i < len - 1; i++) 
         {
             std::string odd = expand_from_center(i, i);
