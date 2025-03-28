@@ -3,7 +3,7 @@ public:
     string longestPalindrome(string s) {
         int len = s.length();
         if (len == 1) return s;
-        
+
         auto expand_from_center = [&](int left, int right){
             while (left >= 0 && right < len && s[left] == s[right])
             {
@@ -20,13 +20,9 @@ public:
             std::string even = expand_from_center(i, i+1);
 
             if (odd.length() > max_str.length())
-            {
                 max_str = odd;
-            }
             if (even.length() > max_str.length())
-            {
                 max_str = even;
-            }
         }
         return max_str;
     }
