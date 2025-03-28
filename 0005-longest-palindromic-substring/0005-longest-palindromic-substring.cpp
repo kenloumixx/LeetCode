@@ -1,39 +1,30 @@
-#include <vector>
-
 class Solution {
 public:
     string longestPalindrome(string s) {
-        int len_str = static_cast<int>(s.length());
-        std::vector<std::vector<bool>> dp(len_str, std::vector<bool>(len_str, false));
-        
-        for (int length = 1; length <= len_str; length++)
-        {
-            for (int start = 0 ; start <= len_str - length ; start++)
-            {
-                if (length == 1)
-                {
-                    dp[start][start] = true;
-                } else if (length == 2 && s[start] == s[start+1])
-                {
-                    dp[start][start+1] = true;
-                } else if (s[start] == s[start+length-1] && dp[start+1][start+length-2] == true)
-                {
-                    dp[start][start+length-1] = true;
-                }
+        int len = s.length();
+        if(len<=1) return s;
+
+        auto expand_from_center = [&](int left, int right) {
+            while (left >= 0 && right < len && s[left] == s[right]) {
+                left--;
+                right++;
+            }
+            return s.substr(left + 1, right - left - 1);
+        };
+
+        string max_str = s.substr(0, 1);
+        for (int i = 0; i < len - 1; i++) {
+            string odd = expand_from_center(i, i);
+            string even = expand_from_center(i, i + 1);
+
+            if (odd.length() > max_str.length()) {
+                max_str = odd;
+            }
+            if (even.length() > max_str.length()) {
+                max_str = even;
             }
         }
 
-        std::string longest_palindromic = "";
-        for (int i = 0; i < len_str; i++) 
-        {
-            for (int j = 0; j < len_str; j++) 
-            {
-                if (dp[i][j] == true && longest_palindromic.length() < (j-i+1))
-                {
-                    longest_palindromic = s.substr(i, j - i + 1);
-                }
-            }
-        }
-        return longest_palindromic;
+        return max_str;
     }
 };
