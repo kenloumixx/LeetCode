@@ -10,7 +10,7 @@ public:
                 left--;
                 right++;
             }
-            return s.substr(left+1, right - left - 1);
+            return s.substr(left + 1, right - left - 1);
         };
 
         std::string max_str = s.substr(0, 1);
@@ -20,10 +20,15 @@ public:
             std::string even = expand_from_center(i, i+1);
 
             if (odd.length() > max_str.length())
+            {
                 max_str = odd;
+            }
             if (even.length() > max_str.length())
+            {
                 max_str = even;
+            }
         }
+        
         return max_str;
     }
 };
