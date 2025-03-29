@@ -1,37 +1,22 @@
 class Solution {
 public:
-    bool match(char chs, char chp) {
-        return (chp == '.' || chs == chp);
+    bool rec(std::string ss, std::string pp) {
+        if (ss.empty() && pp.empty()) return true;
+        else if (pp.empty()) return false;
+        int ppLen = pp.length();
+        int ssLen = ss.length();
+        if (ppLen > 1 && pp[1] == '*')
+        {
+            if (rec(ss, pp.substr(2)) == true) return true;
+            if (ssLen > 0 && (ss[0] == pp[0] || pp[0] == '.')) return rec(ss.substr(1), pp);
+        } else 
+        {
+            if (ssLen > 0 && (ss[0] == pp[0] || pp[0] == '.')) return rec(ss.substr(1), pp.substr(1));
+        }
+        return false;
     }
 
     bool isMatch(string s, string p) {
-        if (s.length() != p.length())
-        {
-            return false;
-        }
-        int s_idx = 0;
-        int p_idx = 0;
-        char prev = '0';
-        while (s_idx < s.length())
-        {
-            if (p[p_idx] == '*')
-            {
-                if (!match(prev, p[p_idx-1]))
-                {
-                    return false;
-
-                }
-            } else if (p[p_idx] != '.')
-            {
-                if (s[s_idx] != p[p_idx]) 
-                {
-                    return false;
-                }
-            } 
-            prev = s[s_idx];
-            s_idx++;
-            p_idx++;
-        }
-        return true;
+        return rec(s, p);
     }
 };
