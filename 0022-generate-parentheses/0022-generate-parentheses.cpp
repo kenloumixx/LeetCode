@@ -1,27 +1,27 @@
 class Solution {
 public:
-    void dfs(int left, int right, int n, string parenthesis, vector<string>& listParenthesis) 
-    {
-        if (parenthesis.length() == n * 2)
-        {
-            listParenthesis.push_back(parenthesis);
+    vector<string> generateParenthesis(int n) {
+        vector<string> result;
+        backtrack(result, "", 0, 0, n);  // Počinjemo sa praznim stringom i nula otvorenih/zatvorenih zagrada
+        return result;
+    }
+
+private:
+    void backtrack(vector<string>& result, string current, int open, int close, int n) {
+        // Ako smo dodali sve otvorene i zatvorene zagrade, dodajemo trenutnu kombinaciju u rezultat
+        if (current.size() == 2 * n) {
+            result.push_back(current);
             return;
         }
 
-        if (left < n)
-        {
-            dfs(left + 1, right, n, parenthesis + '(', listParenthesis);
+        // Dodajemo otvorenu zagradu ako je broj otvorenih manji od n
+        if (open < n) {
+            backtrack(result, current + "(", open + 1, close, n);
         }
-        if (right < left)
-        {
-            dfs(left, right + 1, n, parenthesis + ')', listParenthesis);
-        }
-        return;
-    }
 
-    vector<string> generateParenthesis(int n) {
-        vector<string> listParenthesis;
-        dfs(0, 0, n, "", listParenthesis);
-        return listParenthesis;
+        // Dodajemo zatvorenu zagradu ako je broj zatvorenih manji od broja otvorenih
+        if (close < open) {
+            backtrack(result, current + ")", open, close + 1, n);
+        }
     }
 };
