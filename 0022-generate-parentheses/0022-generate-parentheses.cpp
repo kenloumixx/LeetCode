@@ -5,6 +5,7 @@ public:
         if (parenthesis.length() == n * 2)
         {
             listParenthesis.push_back(parenthesis);
+            return;
         }
 
         if (left < n)
