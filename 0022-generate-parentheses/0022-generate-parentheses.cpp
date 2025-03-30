@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void dfs(int left, int right, int n, string& parenthesis, vector<string>& listParenthesis) 
+    void dfs(int left, int right, int n, string parenthesis, vector<string>& listParenthesis) 
     {
         if (parenthesis.length() == n * 2)
         {
@@ -10,21 +10,18 @@ public:
 
         if (left < n)
         {
-            string Lparenthesis = parenthesis + '(';
-            dfs(left + 1, right, n, Lparenthesis, listParenthesis);
+            dfs(left + 1, right, n, parenthesis + '(', listParenthesis);
         }
         if (right < left)
         {
-            string Rparenthesis = parenthesis + ')';
-            dfs(left, right + 1, n, Rparenthesis, listParenthesis);
+            dfs(left, right + 1, n, parenthesis + ')', listParenthesis);
         }
         return;
     }
 
     vector<string> generateParenthesis(int n) {
         vector<string> listParenthesis;
-        string startParenthesis = "";
-        dfs(0, 0, n, startParenthesis, listParenthesis);
+        dfs(0, 0, n, "", listParenthesis);
         return listParenthesis;
     }
 };
